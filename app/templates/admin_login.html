@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin sign in | EduSmart</title>
+    <link rel="stylesheet" href="/static/admin.css">
+  </head>
+  <body>
+    <main class="card">
+      <a class="brand" href="/">EduSmart</a>
+      <p class="eyebrow">ADMINISTRATION</p>
+      <h1>Admin sign in</h1>
+      <p class="intro">Sign in with the configured administrator credentials.</p>
+      <form id="adminLoginForm">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button id="submitButton" type="submit">Sign in</button>
+      </form>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+      <a class="back-link" href="/">Back to EduSmart</a>
+    </main>
+    <script src="/static/admin.js"></script>
+  </body>
+</html>

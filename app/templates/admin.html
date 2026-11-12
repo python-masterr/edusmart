@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin | EduSmart</title>
+    <link rel="stylesheet" href="/static/admin.css">
+  </head>
+  <body>
+    <main class="card admin-card">
+      <header class="admin-header">
+        <div>
+          <a class="brand" href="/">EduSmart</a>
+          <p class="eyebrow">ADMINISTRATION</p>
+          <h1>Admin overview</h1>
+        </div>
+        <button id="logoutButton" class="secondary-button" type="button">Sign out</button>
+      </header>
+      <p id="adminIdentity" class="intro" aria-live="polite">Loading admin account...</p>
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+      <section id="overview" class="stats" hidden aria-label="Platform overview">
+        <article><span>Accounts</span><strong id="userCount">0</strong></article>
+        <article><span>Study documents</span><strong id="documentCount">0</strong></article>
+        <article><span>Quizzes</span><strong id="quizCount">0</strong></article>
+      </section>
+      <a class="back-link" href="/">Back to EduSmart</a>
+    </main>
+    <script src="/static/admin.js"></script>
+  </body>
+</html>

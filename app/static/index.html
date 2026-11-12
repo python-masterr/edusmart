@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7fb">
+    <meta name="description" content="Your personal AI study space. Turn class materials into notes, answers, and practice quizzes.">
+    <title>EduSmart | Your AI study space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/style.css?v=all-documents-1" rel="stylesheet">
+    <script src="./config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <nav class="navbar topbar">
+      <div class="container">
+        <a class="brand" href="./" aria-label="EduSmart home">
+          <span class="brand-mark" aria-hidden="true">e</span>
+          <span>edu<span class="brand-accent">smart</span></span>
+        </a>
+        <div class="nav-user">
+          <span id="userLabel" class="user-label"></span>
+          <button id="logoutBtn" class="btn btn-sm btn-outline-secondary d-none" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container page-container">
+      <section id="authView" class="auth-wrap">
+        <div class="auth-intro">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> A calmer way to study</span>
+          <h1>Make every<br>study session <span>count.</span></h1>
+          <p class="lead-copy">Your notes, questions, and next breakthrough — all in one thoughtful learning space.</p>
+          <div class="feature-list">
+            <div class="feature-item"><span class="feature-icon purple">✦</span><span><b>Understand faster</b><small>Turn your study materials into clear notes.</small></span></div>
+            <div class="feature-item"><span class="feature-icon mint">⌕</span><span><b>Ask as you learn</b><small>Get answers grounded in your material.</small></span></div>
+            <div class="feature-item"><span class="feature-icon peach">✓</span><span><b>Feel exam-ready</b><small>Practice with quizzes made for you.</small></span></div>
+          </div>
+          <div class="auth-note"><span>✦</span> A little progress every day adds up.</div>
+        </div>
+
+        <div class="card auth-card">
+          <div class="auth-card-top">
+            <div class="auth-avatar" aria-hidden="true">✦</div>
+            <h2>Welcome to your study space</h2>
+            <p>Sign in or create an account with your email and password.</p>
+          </div>
+          <div class="auth-tabs" role="tablist" aria-label="Account options">
+            <button id="loginTab" class="auth-tab active" role="tab" aria-selected="true" aria-controls="loginForm" onclick="showAuth('login')">Log in</button>
+            <button id="registerTab" class="auth-tab" role="tab" aria-selected="false" aria-controls="loginForm" onclick="showAuth('register')">Create account</button>
+          </div>
+          <div class="card-body auth-form-body">
+            <form id="loginForm">
+              <h3 id="authHeading">Good to see you again</h3>
+              <p id="authIntro" class="form-intro">Sign in with your email and password.</p>
+              <div id="nameFieldGroup" class="d-none">
+                <label class="form-label" for="registerName">Full name</label>
+                <input id="registerName" class="form-control mb-3" name="name" placeholder="Your name" autocomplete="name" minlength="2" maxlength="120" disabled>
+              </div>
+              <label class="form-label" for="loginEmail">Email address</label>
+              <input id="loginEmail" class="form-control mb-3" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+              <label class="form-label" for="loginPassword">Password</label>
+              <input id="loginPassword" class="form-control mb-4" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" minlength="8" required>
+              <button id="authSubmit" class="btn btn-primary w-100 auth-submit">Log in to EduSmart <span aria-hidden="true">→</span></button>
+            </form>
+          </div>
+          <div id="authMessage" class="auth-message small" role="status" aria-live="polite"></div>
+          <div class="auth-card-foot"><span aria-hidden="true">🔒</span> Your learning materials stay yours.</div>
+        </div>
+      </section>
+
+      <section id="appView" class="d-none">
+        <header class="dashboard-header">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> Your learning dashboard</span>
+            <h1>Keep your momentum.</h1>
+            <p>Small steps today. Big things ahead.</p>
+            <div id="dashboardMessage" class="small text-danger mt-2" role="status" aria-live="polite"></div>
+          </div>
+          <button class="btn btn-light refresh-btn" onclick="loadAll()"><span aria-hidden="true">↻</span> Refresh</button>
+        </header>
+
+        <div class="row g-3 stats-row">
+          <div class="col-md-4">
+            <article class="stat-card">
+              <div class="stat-icon purple" aria-hidden="true">▤</div>
+              <div><span class="stat-label">Study materials</span><strong id="docStat">0</strong><small>Files in your library</small></div>
+              <span class="stat-decoration" aria-hidden="true">01</span>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="stat-card">
+              <div class="stat-icon mint" aria-hidden="true">✓</div>
+              <div><span class="stat-label">Quiz attempts</span><strong id="quizStat">0</strong><small>Every try moves you forward</small></div>
+              <span class="stat-decoration" aria-hidden="true">02</span>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="stat-card">
+              <div class="stat-icon peach" aria-hidden="true">↗</div>
+              <div><span class="stat-label">Average score</span><strong id="avgStat">0%</strong><small>Your progress, at a glance</small></div>
+              <span class="stat-decoration" aria-hidden="true">03</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="row g-4 content-row">
+          <div class="col-lg-5">
+            <section class="panel upload-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">BUILD YOUR LIBRARY</span><h2>Add study material</h2></div>
+                <span class="panel-heading-icon" aria-hidden="true">✦</span>
+              </div>
+              <p class="panel-copy">Upload documents, presentations, spreadsheets, or text files to study from.</p>
+              <form id="uploadForm">
+                <label class="upload-dropzone" for="studyFile">
+                  <span class="upload-icon" aria-hidden="true">↑</span>
+                  <strong>Choose a study file to upload</strong>
+                  <span>PDF, Word, PowerPoint, Excel, OpenDocument, or text · up to 15 MB</span>
+                  <input id="studyFile" class="form-control" type="file" accept=".pdf,.docx,.pptx,.xlsx,.odt,.odp,.ods,.txt,.md,.rst,.csv,.tsv,.json,.xml,.html,.htm,.rtf,.log,.yaml,.yml,.ini" required>
+                </label>
+                <label class="form-label mt-3" for="subject">Subject <span class="optional-label">optional</span></label>
+                <input id="subject" class="form-control mb-3" placeholder="e.g. Biology, World History" value="General" maxlength="120">
+                <button class="btn btn-primary w-100 upload-submit">Upload material <span aria-hidden="true">→</span></button>
+              </form>
+              <div id="uploadMessage" class="small mt-3" role="status" aria-live="polite"></div>
+              <div class="upload-tip"><span aria-hidden="true">✧</span> Your AI study tools are ready as soon as the upload finishes.</div>
+            </section>
+          </div>
+          <div class="col-lg-7">
+            <section class="panel documents-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">YOUR MATERIALS</span><h2>Study library</h2></div>
+                <span class="library-count"><span id="docStatInline">0</span> files</span>
+              </div>
+              <p class="panel-copy">Open a document to create notes, ask questions, or practice.</p>
+              <div id="documentsList" class="documents-list">
+                <div class="empty-state"><span class="empty-icon" aria-hidden="true">▤</span><b>Your library is waiting</b><span>Upload your first study file and your study space will take shape.</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="row g-4 analytics-row">
+          <div class="col-lg-7">
+            <section class="panel chart-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">ONE STEP AT A TIME</span><h2>Your progress</h2></div>
+                <span class="chart-badge"><span></span> Quiz scores</span>
+              </div>
+              <p class="panel-copy">A look at how your practice is paying off.</p>
+              <div class="chart-wrap"><canvas id="progressChart" height="130" aria-label="Chart showing quiz scores over time"></canvas></div>
+            </section>
+          </div>
+          <div class="col-lg-5">
+            <section class="panel recent-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">FRESH FROM YOUR PRACTICE</span><h2>Recent quizzes</h2></div>
+                <span class="recent-icon" aria-hidden="true">✧</span>
+              </div>
+              <p class="panel-copy">Your latest quiz results will show up here.</p>
+              <div id="recentResults" class="recent-results">
+                <div class="empty-state compact"><span class="empty-icon" aria-hidden="true">✓</span><span>No quizzes yet. Your first one is just around the corner.</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <section id="workspace" class="panel workspace-panel mt-4 d-none">
+          <div class="workspace-header">
+            <div><span class="section-kicker">YOUR STUDY DESK</span><h2 id="selectedTitle"></h2></div>
+            <button class="btn btn-sm btn-outline-secondary close-workspace" onclick="closeWorkspace()">Close <span aria-hidden="true">×</span></button>
+          </div>
+          <div class="workspace-actions">
+            <button class="btn btn-outline-primary" onclick="makeSummary()"><span aria-hidden="true">✦</span> Generate study notes</button>
+            <button class="btn btn-outline-primary" onclick="makeQuiz()"><span aria-hidden="true">✓</span> Create a practice quiz</button>
+          </div>
+          <div id="summaryBox" class="output summary-output d-none mb-4"></div>
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="tool-heading"><span class="tool-icon purple" aria-hidden="true">⌕</span><div><h3>Ask your material</h3><p>Answers grounded in this document.</p></div></div>
+              <div id="chatHistory" class="chat mb-3" aria-live="polite"></div>
+              <form id="chatForm" class="chat-form">
+                <label class="visually-hidden" for="chatQuestion">Ask a question about this material</label>
+                <input id="chatQuestion" class="form-control" placeholder="Ask a question about this material..." required minlength="2">
+                <button class="btn btn-primary" aria-label="Send question">↑</button>
+              </form>
+            </div>
+            <div class="col-lg-6">
+              <div class="tool-heading"><span class="tool-icon mint" aria-hidden="true">✓</span><div><h3>Practice quiz</h3><p>Build confidence, one question at a time.</p></div></div>
+              <div id="quizArea" class="output quiz-output">Choose “Create a practice quiz” when you’re ready.</div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container"><a class="brand footer-brand" href="./"><span class="brand-mark" aria-hidden="true">e</span><span>edu<span class="brand-accent">smart</span></span></a><span>Made for curious minds. Keep learning, at your pace.</span></div>
+    </footer>
+    <script src="./static/app.js?v=all-documents-1"></script>
+  </body>
+</html>

@@ -66,7 +66,7 @@ GitHub Pages hosts the frontend; Render hosts the FastAPI backend. GitHub Pages 
 
 1. Push this repository to GitHub. The workflow in `.github/workflows/pages.yml` publishes the frontend from `app/static` using GitHub Pages. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.
 2. In Render, create a Blueprint from the repository and deploy `render.yaml`. The free service uses SQLite on temporary storage, so accounts, uploaded materials, and quiz results may be lost when the service restarts or redeploys.
-3. In the GitHub repository, add the Actions variable `EDUSMART_API_BASE` with the full Render service URL, such as `https://edusmart-api.onrender.com`, then rerun the Pages workflow.
+3. The Pages workflow uses `https://edusmart-api.onrender.com` by default. If Render gives the service a different URL, set the GitHub Actions repository variable `EDUSMART_API_BASE` to that URL and rerun the workflow.
 4. The Render service's `CORS_ORIGINS` must include the GitHub Pages origin (for this repository, `https://python-masterr.github.io`). Set `GEMINI_API_KEY` in Render to enable AI features. Do not commit `.env` or secrets.
 
 The GitHub Pages site URL is `https://python-masterr.github.io/edusmart`. If the repository owner or name changes, update the URL and the backend `CORS_ORIGINS` value.

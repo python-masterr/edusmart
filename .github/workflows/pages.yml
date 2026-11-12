@@ -22,11 +22,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Build frontend
         env:
-          API_BASE: ${{ vars.EDUSMART_API_BASE }}
+          API_BASE: ${{ vars.EDUSMART_API_BASE || 'https://edusmart-api.onrender.com' }}
         run: |
-          test -n "$API_BASE" || { echo "Set the EDUSMART_API_BASE repository variable to the Render service URL."; exit 1; }
           mkdir -p _site/static
           cp app/static/index.html _site/index.html
           cp app/static/style.css _site/static/style.css
